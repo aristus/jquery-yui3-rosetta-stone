@@ -1,0 +1,478 @@
+<style>
+body {
+  font-family: helvetica neue;
+}
+
+h1, h2, h3 {
+   font-weight: normal;
+    margin:0;
+}
+
+h4 {
+   color: #666;
+   margin:0;
+    display: none;
+}
+
+pre, pre * {
+    font-size: 12px;
+}
+
+pre.jq {
+   color: #009;
+}
+pre.yui {
+   color: #900;
+}
+
+code {
+    font-weight: bold;
+}
+
+td.code {
+    width: 200px;
+    font-size: 12px;
+}
+
+td.notes {
+    width: 550px;
+    font-size: 12px;
+    background: f2f2f2
+}
+
+tr.odd {
+    jjbackground:#f9f9f9;
+}
+
+td {
+}
+
+table {
+    width: 100%;
+    cell-spacing: 0;
+    cell-padding: 0;
+}
+
+td {
+    border-top: solid 1px #ccc;
+    vertical-align: top;
+    padding: 8px 12px 20px 8px;
+}
+
+th {
+    text-align: left;
+    border-bottom: solid 1px #666;
+}
+
+pre.code i {
+    color:#666;
+}
+
+</style>
+
+
+<table cellspacing="0">
+  <thead>
+    <th class="code">
+      <h2 style="color:#009;">jQuery</h2>
+    </th>
+    <th class="code">
+      <h2 style="color:#900;">YUI</h2>
+    </th>
+    <th class="notes">
+      <h2>Notes</h2>
+    </th>
+  </thead>
+
+
+
+  <tr>
+    <td class="code">
+      <pre class="code jq">$</pre>
+    </td>
+    <td class="code">
+      <pre class="code yui">YUI().use('node', function(Y) {
+    // code here
+    Y
+});</pre>
+    </td>
+    <td class="notes">
+      <h4>Selecting multiple DOM elements</h4>
+      <p>The <code>jQuery</code> and <code>$</code> objects are globals and the jQuery library itself is statically loaded, so they are available immediately. YUI3 is sandboxed and by default is dynamically loaded. The <code>Y</code> object is only available inside the anonymous function sandbox, and the function only executes after all scripts are present and accounted for. This makes for a cleaner environment (eg, you can mix multiple versions of YUI in the same page) at the cost of some counterintuitive onload behavior.</p>
+    </td>
+  </tr>
+
+
+  <tr class="odd">
+    <td class="code">
+      <pre class="code jq">$('div.foo:first')</pre>
+    </td>
+    <td class="code">
+      <pre class="code yui">Y.one('div.foo')</pre>
+    </td>
+    <td class="notes">
+      <h4>Selecting one DOM element</h4>
+      <p>jQuery and YUI3 use the similar selector engine syntax. [yes? except for :first?]</p>
+
+      <p><code>Y.one()</code> returns single items. If no elements match the selector, it returns <code>null</code>, not the empty list <code>[]</code>.<p>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="code">
+      <pre class="code jq">$('div.foo')</pre>
+    </td>
+    <td class="code">
+      <pre class="code yui">Y.all('div.foo')</pre>
+    </td>
+    <td class="notes">
+      <h4>Selecting multiple DOM elements</h4>
+      <p>If no elements match the selector, <code>Y.all()</code> returns an empty <code>NodeList</code>, not the empty list <code>[]</code>. A <code>NodeList</code> is "truthy" unlike the empty list, so use the <code>.size()</code> property to check for emptiness.<p>
+    </td>
+  </tr>
+
+
+
+  <tr>
+    <td class="code">
+      <pre class="code jq">.find('p.foo:first')
+.find('p.foo')</pre>
+    </td>
+    <td class="code">
+      <pre class="code yui">.one('p.foo')
+.all('p.foo')</pre>
+    </td>
+    <td class="notes">
+      <h4>...</h4>
+      <p><p>
+    </td>
+  </tr>
+
+  <tr class="odd">
+    <td class="code">
+      <pre class="code jq">$('&lt;div/&gt;')</pre>
+
+    </td>
+    <td class="code">
+      <pre class="code yui">Y.Node.create('&lt;div/&gt;')</pre>
+    </td>
+    <td class="notes">
+      <h4>Creating Elements</h4>
+      <p><p>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="code">
+      <pre class="code jq">.html('foo')
+.text('foo')
+.val('foo')
+</pre>
+
+    </td>
+    <td class="code">
+      <pre class="code yui">.setContent('foo')
+.set('text', 'foo')
+.set('value', 'foo')</pre>
+    </td>
+    <td class="notes">
+      <p><code>.set()</code> is a generic method in YUI for modifying element attributes.<p>
+      <p><code>.setContent(<i>html</i>)</code> is a convenience wrapper around <code>.set('innerHTML', <i>html</i>)</code><p>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="code">
+      <pre class="code jq">.html()
+.text()
+.val()</pre>
+
+    </td>
+    <td class="code">
+      <pre class="code yui">.get('innerHTML')
+.get('text')
+.get('value')
+</pre>
+    </td>
+    <td class="notes">
+    </td>
+  </tr>
+
+  <tr>
+    <td class="code">
+      <pre class="code jq">.click(<i>fn</i>)
+.focus(<i>fn</i>)
+.blur(<i>fn</i>)
+.mouseout(<i>fn</i>)
+.mouseover(<i>fn</i>)
+</pre>
+
+    </td>
+    <td class="code">
+      <pre class="code yui">.on('click', <i>fn</i>)
+.on('focus', <i>fn</i>)
+.on('blur', <i>fn</i>)
+.on('mouseout', <i>fn</i>)
+.on('mouseover', <i>fn</i>)
+</pre>
+    </td>
+    <td class="notes">
+      <p><code>.on()</code> is not repeat <b>not chainable</b> by default!</p>
+    </td>
+  </tr>
+
+
+
+  <tr class="odd">
+    <td class="code">
+      <pre class="code jq"><i>parent</i>.append('&lt;div/&gt;')</pre>
+
+    </td>
+    <td class="code">
+      <pre class="code yui"><i>parent</i>.append('&lt;div/&gt;')</pre>
+    </td>
+    <td class="notes">
+      <h4>Creating Elements</h4>
+      <p><p>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="code">
+      <pre class="code jq"><i>parent</i> = $('&lt;div/&gt;');
+$('&lt;p&gt;foo&lt;p&gt;')
+  .click(<i>fn</i>)
+  .appendTo(<i>parent</i>);</pre>
+
+    </td>
+    <td class="code">
+      <pre class="code yui"><i>parent</i> = Y.Node.create('&lt;div/&gt;');
+<i>child</i> = Y.Node.create('&lt;p&gt;foo&lt;/p&gt;');
+<i>child</i>.on('click', <i>fn</i>);
+<i>parent</i>.appendChild(<i>child</i>);
+</pre>
+    </td>
+    <td class="notes">
+      <h4>Creating Elements</h4>
+      <p>YUI3 builds element trees outside-in. jQuery can do both outside-in and inside-out (see next entry). YUI3 may add support for <code>.appendTo()</code> in the future.<p>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td class="code">
+      <pre class="code jq"><i>child</i>.appendTo(<i>parent</i>)</pre>
+    </td>
+    <td class="code">
+      <pre class="code yui"><i>parent</i>.append(<i>child</i>)
+<i>parent</i>.appendChild(<i>child</i>)
+      </pre>
+    </td>
+    <td class="notes">
+      <h4></h4>
+      <p>jQuery's <code>.appendTo()</code> returns the child element. YUI3's <code>.appendChild()</code> returns the child element but <code>.append()</code> returns the parent.</p>
+      <p>YUI3's <code>.append()</code> can take either a Node, a bare DOM element, or a string to be converted to HTML.</p>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td class="code">
+      <pre class="code jq">.addClass('foo')
+.removeClass('foo')
+.toggleClass('foo')
+</pre>
+    </td>
+    <td class="code">
+      <pre class="code yui">.addClass('foo')
+.removeClass('foo')
+.toggleClass('foo')
+</pre>
+    </td>
+    <td class="notes">
+      <h4>...</h4>
+      <p>
+
+      <p>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="code">
+      <pre class="code jq">.removeClass('foo').addClass('bar')
+</pre>
+    </td>
+    <td class="code">
+      <pre class="code yui">.replaceClass('foo', 'bar')</pre>
+    </td>
+    <td class="notes">
+      <h4>...</h4>
+      <p>
+
+      <p>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="code">
+      <pre class="code jq">.empty()</pre>
+    </td>
+    <td class="code">
+      <pre class="code yui">.get('children').remove(true);</pre>
+    </td>
+    <td class="notes">
+      <h4>...</h4>
+      <p>
+        jQuery's <code>.empty()</code> also deregisters any events associated with the elements being destroyed. The true argument passed to <code>.remove()</code> enables the same behavior in YUI3.
+      <p>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td class="code">
+      <pre class="code jq">.siblings()</pre>
+    </td>
+    <td class="code">
+      <pre class="code yui">.get('parentNode').get('children')</pre>
+    </td>
+    <td class="notes">
+      <h4>...</h4>
+      <p>
+        Note that the YUI3 code is not equivalent: it will contain all child elements including the caller. YUI3 may add support for <code>.siblings()</code> in a later release.
+      <p>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td class="code">
+      <pre class="code jq">.show()
+.hide()</pre>
+    </td>
+    <td class="code">
+      <pre class="code yui">.setStyle('display', <i>null</i>)
+.setStyle('display', 'none')</pre>
+    </td>
+    <td class="notes">
+      <h4>...</h4>
+      <p>YUI3 does not provide convenience wrappers for show/hide with animations and effects.<p>
+    </td>
+  </tr>
+
+
+
+
+  <tr>
+    <td class="code">
+      <pre class="code jq"></pre>
+    </td>
+    <td class="code">
+      <pre class="code yui"></pre>
+    </td>
+    <td class="notes">
+      <h4>...</h4>
+      <p>
+
+      <p>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td class="code">
+      <pre class="code jq"></pre>
+    </td>
+    <td class="code">
+      <pre class="code yui"></pre>
+    </td>
+    <td class="notes">
+      <h4>...</h4>
+      <p>
+
+      <p>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td class="code">
+      <pre class="code jq"></pre>
+    </td>
+    <td class="code">
+      <pre class="code yui"></pre>
+    </td>
+    <td class="notes">
+      <h4>...</h4>
+      <p>
+
+      <p>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td class="code">
+      <pre class="code jq"></pre>
+    </td>
+    <td class="code">
+      <pre class="code yui"></pre>
+    </td>
+    <td class="notes">
+      <h4>...</h4>
+      <p>
+
+      <p>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td class="code">
+      <pre class="code jq"></pre>
+    </td>
+    <td class="code">
+      <pre class="code yui"></pre>
+    </td>
+    <td class="notes">
+      <h4>...</h4>
+      <p>
+
+      <p>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td class="code">
+      <pre class="code jq"></pre>
+    </td>
+    <td class="code">
+      <pre class="code yui"></pre>
+    </td>
+    <td class="notes">
+      <h4>...</h4>
+      <p>
+
+      <p>
+    </td>
+  </tr>
+
+
+  <tr>
+    <td class="code">
+      <pre class="code jq"></pre>
+    </td>
+    <td class="code">
+      <pre class="code yui"></pre>
+    </td>
+    <td class="notes">
+      <h4>...</h4>
+      <p>
+
+      <p>
+    </td>
+  </tr>
+
+</table>
+
