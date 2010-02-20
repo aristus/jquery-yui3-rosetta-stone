@@ -92,7 +92,8 @@ pre.code i {
       <pre class="code jq">$<i>.foo.bar()</i></pre>
     </td>
     <td class="code">
-      <pre class="code yui">YUI().use('node', function(Y) {
+      <pre class="code yui">YUI().use('node',
+function(Y) {
     Y<i>.foo.bar()</i>
 });</pre>
     </td>
@@ -477,61 +478,59 @@ $('&lt;p&gt;foo&lt;p&gt;')
 </table>
 
 <a name="selectors"><h2>Selectors</h2></a>
-<p class="gloss">jQuery uses the <a href="http://wiki.github.com/jeresig/sizzle/">Sizzle CSS selector library</a>, which is CSS3-compliant but also has some extra pseudoclasses and extensions. YUI3 ships with three selector libraries: native (the default), CSS2, and CSS3. This section documents mostly the differences between jQuery and the <a href="http://www.w3.org/TR/css3-selectors/">CSS3 specification</a>.</p>
+<p class="gloss">jQuery uses the <a href="http://wiki.github.com/jeresig/sizzle/">Sizzle CSS selector library</a>, which is CSS3-compliant but also has a great many extra pseudoclasses and extensions, some of which (eg <code>:first</code>) are used very often while others (eg <code>:header</code>) are obscure.</p>
+
+<p class="gloss">YUI3 can operate with three selector engines: browser native (the default), CSS2, and CSS3. This section documents mostly the differences between jQuery and the <a href="http://www.w3.org/TR/css3-selectors/">CSS3 specification</a>.</p>
 
 <table cellspacing="0">
   <tr>
     <td class="code"><pre class="code jq">$('*')</pre></td>
-    <td class="code"><pre class="code yui">YUI().use('node', 'selector-css3', function(Y) {
+    <td class="code"><pre class="code yui">YUI().use('node', 'selector-css3', 
+function(Y) {
     Y.all('*')
 });</pre></td>
-    <td class="notes"><p>Select all nodes. Note the inclusion of the selector-css3 module in YUI. For the rest of the examples in this section, please assume this module.<p></td>
-  </tr>
-  <tr>
-    <td class="code"><pre class="code jq">$('div:first)</pre></td>
-    <td class="code"><pre class="code yui">Y.one('div')</pre></td>
-    <td class="notes"><p>The <code>.one()</code> method returns <code>null</code> if there is no match, and a single Node object if there is.<p></td>
+    <td class="notes"><p>Select all nodes. Note the inclusion of the selector-css3 module in YUI. For the rest of the examples in this section, please assume this module.</p></td>
   </tr>
   <tr>
     <td class="code"><pre class="code jq">$(':animated')</pre></td>
     <td class="code"><pre class="code yui"></pre></td>
-    <td class="notes"><p>Psuedoclass to select all elements currently being animated. No YUI3 equivalent. <p></td>
+    <td class="notes"><p>Psuedoclass to select all elements currently being animated. No YUI3 equivalent. </p></td>
   </tr>
   <tr>
     <td class="code"><pre class="code jq">$(':button')</pre></td>
     <td class="code"><pre class="code yui">Y.all('input[type=button], button')</pre></td>
-    <td class="notes"><p>In both jQuery and YUI3 you can run multiple selectors separated by commas.<p></td>
+    <td class="notes"><p>In both jQuery and YUI3 you can run multiple selectors separated by commas.</p></td>
   </tr>
   <tr>
     <td class="code"><pre class="code jq">$(':checkbox')</pre></td>
     <td class="code"><pre class="code yui">Y.all('input[type=checkbox]')</pre></td>
-    <td class="notes"><p><p></td>
+    <td class="notes"><p></p></td>
   </tr>
   <tr>
     <td class="code"><pre class="code jq">$(':checked')</pre></td>
     <td class="code"><pre class="code yui">Y.all(':checked')</pre></td>
-    <td class="notes"><p>CSS3<p></td>
+    <td class="notes"><p>CSS3</p></td>
   </tr>
   <tr>
     <td class="code"><pre class="code jq">$('parent > child')</pre></td>
     <td class="code"><pre class="code yui">Y.all('parent > child')</pre></td>
-    <td class="notes"><p>Immediate child selector (child must be one level below parent)<p></td>
+    <td class="notes"><p>Immediate child selector (child must be one level below parent)</p></td>
   </tr>
   <tr>
     <td class="code"><pre class="code jq">$('parent child')</pre></td>
     <td class="code"><pre class="code yui">Y.all('parent child')</pre></td>
-    <td class="notes"><p>Descendent selector (child can be at any level below parent)<p></td>
+    <td class="notes"><p>Descendent selector (child can be at any level below parent)</p></td>
   </tr>
   <tr>
     <td class="code"><pre class="code jq">$('div.class')</pre></td>
     <td class="code"><pre class="code yui">Y.all('div.class')</pre></td>
-    <td class="notes"><p>Class selector<p></td>
+    <td class="notes"><p>Class selector</p></td>
   </tr>
 
   <tr>
     <td class="code"><pre class="code jq">$(":contains('<i>foo</i>')")</pre></td>
     <td class="code"><pre class="code yui">Y.all(':contains(<i>foo</i>)')</pre></td>
-    <td class="notes"><p>Extension to select all elements whose text matches 'foo'. jQuery can take quotes or not. YUI3 requires no quotes. The text matching is plain string comparison, not glob or regexp. Be careful with this one as it will return all matching ancestors, eg <code>[html, body, div]</code>.<p></td>
+    <td class="notes"><p>Extension to select all elements whose text matches 'foo'. jQuery can take quotes or not. YUI3 requires no quotes. The text matching is plain string comparison, not glob or regexp. Be careful with this one as it will return all matching ancestors, eg <code>[html, body, div]</code>.</p></td>
   </tr>
 
   <tr>
@@ -539,19 +538,19 @@ $('&lt;p&gt;foo&lt;p&gt;')
 $(':enabled')</pre></td>
     <td class="code"><pre class="code yui">Y.all(':disabled')
 Y.all(':enabled')</pre></td>
-    <td class="notes"><p>CSS3. <code>'input[disabled]'</code> and <code>'input:not([disabled])'</code> also works in both.<p></td>
+    <td class="notes"><p>CSS3. <code>'input[disabled]'</code> and <code>'input:not([disabled])'</code> also work in both libraries.</p></td>
   </tr>
 
   <tr>
     <td class="code"><pre class="code jq">$(':empty')</pre></td>
     <td class="code"><pre class="code yui">Y.all(':empty')</pre></td>
-    <td class="notes"><p>CSS3. Selects all elements that have no child nodes (excluding text nodes).<p></td>
+    <td class="notes"><p>CSS3. Selects all elements that have no child nodes (excluding text nodes).</p></td>
   </tr>
 
   <tr>
     <td class="code"><pre class="code jq">$('div:eq(<i>n</i>)')</pre></td>
     <td class="code"><pre class="code yui">Y.all('div').item(<i>n</i>)</pre></td>
-    <td class="notes"><p>Extension. Selects <i>nth</i> element.<p></td>
+    <td class="notes"><p>Extension. Selects <i>nth</i> element. YUI's <code>item()</code> will return <code>null</code> if there is no <code>nth</code> element. jQuery's selector will return the empty list <code>[]</code> on a match failure.</p></td>
   </tr>
 
   <tr>
@@ -559,37 +558,181 @@ Y.all(':enabled')</pre></td>
 $('div:odd')</pre></td>
     <td class="code"><pre class="code yui">Y.all('div').even()
 Y.all('div').odd()</pre></td>
-    <td class="notes"><p>Extension. Selects all even or odd elements. Note that elements are 0-indexed and the 0th element is considered even.<p></td>
+    <td class="notes"><p>Extension. Selects all even or odd elements. Note that elements are 0-indexed and the 0th element is considered even. See also YUI3's <code>NodeList.modulus(n, offset)</code>.</p></td>
   </tr>
 
   <tr>
     <td class="code"><pre class="code jq">$(':file')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('input[type=file]')</pre></td>
+    <td class="notes"><p></p></td>
+  </tr>
+
+  <tr>
+    <td class="code"><pre class="code jq">$('div:first-child')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('div:first-child')</pre></td>
+    <td class="notes"><p>CSS3. Selects the first child element.</p></td>
+  </tr>
+
+  <tr>
+    <td class="code"><pre class="code jq">$('div:first)</pre></td>
+    <td class="code"><pre class="code yui">Y.one('div')</pre></td>
+    <td class="notes"><p>The <code>.one()</code> method returns <code>null</code> if there is no match, and a single Node object if there is.</p></td>
+  </tr>
+
+  <tr>
+    <td class="code"><pre class="code jq">$('div:gt(<i>n</i>)')
+$('div:lt(<i>n</i>)')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('div')._nodes.slice(<i>n + 1</i>)
+Y.all('div')._nodes.slice(0,<i>n</i>)</pre></td>
+    <td class="notes"><p>Extension. <code>:gt</code> (greater than) selects all elements from index <code>n+1</code> onwards. <code>:lt</code> (less than) selects all nodes from 0 up to <code>n-1</code>. Note that in the YUI3 example we have to access the private <code>_nodes</code> array and perform a <code>slice()</code>. <code>NodeList.slice()</code> may be added in an upcoming point release.</p></td>
+  </tr>
+
+  <tr>
+    <td class="code"><pre class="code jq">$('div:has(p)')</pre></td>
+    <td class="code"><pre class="code yui"></pre></td>
+    <td class="notes"><p>Extension. Selects elements which contain at least one element that matches the specified selector. In this example, all <code>div</code> tags which have a <code>p</code> tag descendent will be selected.</p></td>
+  </tr>
+
+  <tr>
+    <td class="code"><pre class="code jq">$(':header')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('h1,h2,h3,h4,h5,h6,h7')</pre></td>
+    <td class="notes"><p>Extension. Selects all heading elements</p></td>
+  </tr>
+
+  <tr>
+    <td class="code"><pre class="code jq">$('div:hidden')</pre></td>
+    <td class="code"><pre class="code yui"><!--var hidden = [];
+Y.all('div').each(function(node) {
+    if ((node.get('offsetWidth') === 0 &&
+        node.get('offsetHeight') === 0 &&
+        node.get('className').toLowerCase() !== 'tr') ||
+        node.get('display') === 'none') {
+        hidden.push(node);
+    }
+});
+hidden = Y.all(hidden);-->
+</pre></td>
+    <td class="notes"><p>Extension. This is a weird one. In jQuery > 1.3.2 <code>:hidden</code> selects all elements (or descendents of elements) which <a href="http://docs.jquery.com/Release:jQuery_1.3.2#:visible.2F:hidden_Overhauled">take up no visual space</a>. Elements with <code>display:none</code> or whose <code>offsetWidth/offsetHeight</code> equal 0 are considered hidden. Elements with <code>visibility:hidden</code> are <b>not</b> considered hidden.</p>
+
+<p>The YUI3 equivalent would essentially a port of the jQuery code that implements <code>:hidden</code>. This might be a good candidate for a patch to YUI3.</p>
+</td>
+  </tr>
+
+  <tr>
+    <td class="code"><pre class="code jq">$('#id')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('#id')</pre></td>
+    <td class="notes"><p>CSS3. Identity selector.</p></td>
+  </tr>
+
+  <tr>
+    <td class="code"><pre class="code jq">$('input:image')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('input[type=image]')</pre></td>
+    <td class="notes"><p>Extension. Selects all inputs of type image.</p></td>
+  </tr>
+
+  <tr>
+    <td class="code"><pre class="code jq">$(':input')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('input,textarea,select,button')</pre></td>
+    <td class="notes"><p>Extension. Selects all user-editable form elements.</p></td>
+  </tr>
+
+  <tr>
+    <td class="code"><pre class="code jq">$(':last-child')</pre></td>
+    <td class="code"><pre class="code yui">Y.all(':last-child')</pre></td>
+    <td class="notes"><p>CSS3.</p></td>
+  </tr>
+
+
+  <tr>
+    <td class="code"><pre class="code jq">$('div:last')</pre></td>
+    <td class="code"><pre class="code yui">var lst = Y.all('div');
+if (lst) {
+    var last = lst.item(lst.size()-1);
+}</pre></td>
+    <td class="notes"><p>The YUI equivalent is cumbersome, but I'm not sure if <code>:last</code> is popular enough to warrant a patch.</p></td>
+  </tr>
+
+
+  <tr>
+    <td class="code"><pre class="code jq">$('input[type=checkbox][checked]')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('input[type=checkbox][checked]')</pre></td>
+    <td class="notes"><p>CSS3, multiple attribute selector</p></td>
+  </tr>
+
+
+  <tr>
+    <td class="code"><pre class="code jq">$('')</pre></td>
     <td class="code"><pre class="code yui">Y.all('')</pre></td>
-    <td class="notes"><p><p></td>
+    <td class="notes"><p></p></td>
+  </tr>
+
+
+  <tr>
+    <td class="code"><pre class="code jq">$('')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('')</pre></td>
+    <td class="notes"><p></p></td>
+  </tr>
+
+
+  <tr>
+    <td class="code"><pre class="code jq">$('')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('')</pre></td>
+    <td class="notes"><p></p></td>
+  </tr>
+
+
+  <tr>
+    <td class="code"><pre class="code jq">$('')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('')</pre></td>
+    <td class="notes"><p></p></td>
+  </tr>
+
+
+  <tr>
+    <td class="code"><pre class="code jq">$('')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('')</pre></td>
+    <td class="notes"><p></p></td>
+  </tr>
+
+
+  <tr>
+    <td class="code"><pre class="code jq">$('')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('')</pre></td>
+    <td class="notes"><p></p></td>
+  </tr>
+
+
+  <tr>
+    <td class="code"><pre class="code jq">$('')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('')</pre></td>
+    <td class="notes"><p></p></td>
+  </tr>
+
+
+  <tr>
+    <td class="code"><pre class="code jq">$('')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('')</pre></td>
+    <td class="notes"><p></p></td>
+  </tr>
+
+
+  <tr>
+    <td class="code"><pre class="code jq">$('')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('')</pre></td>
+    <td class="notes"><p></p></td>
+  </tr>
+
+
+  <tr>
+    <td class="code"><pre class="code jq">$('')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('')</pre></td>
+    <td class="notes"><p></p></td>
   </tr>
 
   <tr>
     <td class="code"><pre class="code jq">$('')</pre></td>
     <td class="code"><pre class="code yui">Y.all('')</pre></td>
-    <td class="notes"><p><p></td>
-  </tr>
-
-  <tr>
-    <td class="code"><pre class="code jq">$('')</pre></td>
-    <td class="code"><pre class="code yui">Y.all('')</pre></td>
-    <td class="notes"><p><p></td>
-  </tr>
-
-  <tr>
-    <td class="code"><pre class="code jq">$('')</pre></td>
-    <td class="code"><pre class="code yui">Y.all('')</pre></td>
-    <td class="notes"><p><p></td>
-  </tr>
-
-  <tr>
-    <td class="code"><pre class="code jq">$('')</pre></td>
-    <td class="code"><pre class="code yui">Y.all('')</pre></td>
-    <td class="notes"><p><p></td>
+    <td class="notes"><p></p></td>
   </tr>
 
 </table>
