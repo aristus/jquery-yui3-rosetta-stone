@@ -14,8 +14,9 @@ h4 {
     display: none;
 }
 
-pre, pre * {
-    font-size: 12px;
+pre, pre *, code {
+    font-size: 11px;
+    font-family: inconsolata, monofur, courier;
 }
 
 pre.jq {
@@ -30,18 +31,18 @@ code {
 }
 
 td.code {
-    width: 200px;
-    font-size: 12px;
+    width: 30%;
+    font-size: 11px;
 }
 
 td.notes {
-    width: 550px;
-    font-size: 12px;
-    background: f2f2f2
+    width: 40%;
+    font-size: 11px;
+    background: #f2f2f2;
 }
 
-tr.odd {
-    jjbackground:#f9f9f9;
+p.gloss {
+    font-size:12px;
 }
 
 td {
@@ -54,9 +55,9 @@ table {
 }
 
 td {
-    border-top: solid 1px #ccc;
+    border-top: solid 1px #ddd;
     vertical-align: top;
-    padding: 8px 12px 20px 8px;
+    padding: 8px 12px 10px 8px;
 }
 
 th {
@@ -74,13 +75,13 @@ pre.code i {
 <table cellspacing="0">
   <thead>
     <th class="code">
-      <h2 style="color:#009;">jQuery</h2>
+      <h3 style="color:#009;">jQuery 1.4.2</h3>
     </th>
     <th class="code">
-      <h2 style="color:#900;">YUI</h2>
+      <h3 style="color:#900;">YUI 3.0.0</h3>
     </th>
     <th class="notes">
-      <h2>Notes</h2>
+      <h3>Notes</h3>
     </th>
   </thead>
 
@@ -88,17 +89,16 @@ pre.code i {
 
   <tr>
     <td class="code">
-      <pre class="code jq">$</pre>
+      <pre class="code jq">$<i>.foo.bar()</i></pre>
     </td>
     <td class="code">
       <pre class="code yui">YUI().use('node', function(Y) {
-    // code here
-    Y
+    Y<i>.foo.bar()</i>
 });</pre>
     </td>
     <td class="notes">
       <h4>Selecting multiple DOM elements</h4>
-      <p>The <code>jQuery</code> and <code>$</code> objects are globals and the jQuery library itself is statically loaded, so they are available immediately. YUI3 is sandboxed and by default is dynamically loaded. The <code>Y</code> object is only available inside the anonymous function sandbox, and the function only executes after all scripts are present and accounted for. This makes for a cleaner environment (eg, you can mix multiple versions of YUI in the same page) at the cost of some counterintuitive onload behavior.</p>
+      <p>The <code>jQuery</code> and <code>$</code> objects are globals and the jQuery library itself is statically loaded, so they are available immediately. YUI3 is sandboxed and by default is dynamically loaded. The <code>Y</code> object is only available inside the anonymous function sandbox, and the function only executes after all scripts are present and accounted for. This makes for a cleaner environment (eg, you can mix multiple versions of YUI in the same page) at the cost of some counterintuitive onload behavior. Also see Selectors below.</p>
     </td>
   </tr>
 
@@ -112,7 +112,7 @@ pre.code i {
     </td>
     <td class="notes">
       <h4>Selecting one DOM element</h4>
-      <p>jQuery and YUI3 use the similar selector engine syntax. [yes? except for :first?]</p>
+      <p>jQuery and YUI3 use the similar selector engine syntax, but jQuery has added extensions to the Sizzle CSS3-compliant selector engine. YUI3 comes with three different selector engines; see the section on <a href="#selectors">Selectors</a>.
 
       <p><code>Y.one()</code> returns single items. If no elements match the selector, it returns <code>null</code>, not the empty list <code>[]</code>.<p>
     </td>
@@ -318,7 +318,7 @@ $('&lt;p&gt;foo&lt;p&gt;')
       <pre class="code jq">.empty()</pre>
     </td>
     <td class="code">
-      <pre class="code yui">.get('children').remove(true);</pre>
+      <pre class="code yui">.get('children').remove(<i>true</i>);</pre>
     </td>
     <td class="notes">
       <h4>...</h4>
@@ -476,3 +476,120 @@ $('&lt;p&gt;foo&lt;p&gt;')
 
 </table>
 
+<a name="selectors"><h2>Selectors</h2></a>
+<p class="gloss">jQuery uses the <a href="http://wiki.github.com/jeresig/sizzle/">Sizzle CSS selector library</a>, which is CSS3-compliant but also has some extra pseudoclasses and extensions. YUI3 ships with three selector libraries: native (the default), CSS2, and CSS3. This section documents mostly the differences between jQuery and the <a href="http://www.w3.org/TR/css3-selectors/">CSS3 specification</a>.</p>
+
+<table cellspacing="0">
+  <tr>
+    <td class="code"><pre class="code jq">$('*')</pre></td>
+    <td class="code"><pre class="code yui">YUI().use('node', 'selector-css3', function(Y) {
+    Y.all('*')
+});</pre></td>
+    <td class="notes"><p>Select all nodes. Note the inclusion of the selector-css3 module in YUI. For the rest of the examples in this section, please assume this module.<p></td>
+  </tr>
+  <tr>
+    <td class="code"><pre class="code jq">$('div:first)</pre></td>
+    <td class="code"><pre class="code yui">Y.one('div')</pre></td>
+    <td class="notes"><p>The <code>.one()</code> method returns <code>null</code> if there is no match, and a single Node object if there is.<p></td>
+  </tr>
+  <tr>
+    <td class="code"><pre class="code jq">$(':animated')</pre></td>
+    <td class="code"><pre class="code yui"></pre></td>
+    <td class="notes"><p>Psuedoclass to select all elements currently being animated. No YUI3 equivalent. <p></td>
+  </tr>
+  <tr>
+    <td class="code"><pre class="code jq">$(':button')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('input[type=button], button')</pre></td>
+    <td class="notes"><p>In both jQuery and YUI3 you can run multiple selectors separated by commas.<p></td>
+  </tr>
+  <tr>
+    <td class="code"><pre class="code jq">$(':checkbox')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('input[type=checkbox]')</pre></td>
+    <td class="notes"><p><p></td>
+  </tr>
+  <tr>
+    <td class="code"><pre class="code jq">$(':checked')</pre></td>
+    <td class="code"><pre class="code yui">Y.all(':checked')</pre></td>
+    <td class="notes"><p>CSS3<p></td>
+  </tr>
+  <tr>
+    <td class="code"><pre class="code jq">$('parent > child')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('parent > child')</pre></td>
+    <td class="notes"><p>Immediate child selector (child must be one level below parent)<p></td>
+  </tr>
+  <tr>
+    <td class="code"><pre class="code jq">$('parent child')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('parent child')</pre></td>
+    <td class="notes"><p>Descendent selector (child can be at any level below parent)<p></td>
+  </tr>
+  <tr>
+    <td class="code"><pre class="code jq">$('div.class')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('div.class')</pre></td>
+    <td class="notes"><p>Class selector<p></td>
+  </tr>
+
+  <tr>
+    <td class="code"><pre class="code jq">$(":contains('<i>foo</i>')")</pre></td>
+    <td class="code"><pre class="code yui">Y.all(':contains(<i>foo</i>)')</pre></td>
+    <td class="notes"><p>Extension to select all elements whose text matches 'foo'. jQuery can take quotes or not. YUI3 requires no quotes. The text matching is plain string comparison, not glob or regexp. Be careful with this one as it will return all matching ancestors, eg <code>[html, body, div]</code>.<p></td>
+  </tr>
+
+  <tr>
+    <td class="code"><pre class="code jq">$(':disabled')
+$(':enabled')</pre></td>
+    <td class="code"><pre class="code yui">Y.all(':disabled')
+Y.all(':enabled')</pre></td>
+    <td class="notes"><p>CSS3. <code>'input[disabled]'</code> and <code>'input:not([disabled])'</code> also works in both.<p></td>
+  </tr>
+
+  <tr>
+    <td class="code"><pre class="code jq">$(':empty')</pre></td>
+    <td class="code"><pre class="code yui">Y.all(':empty')</pre></td>
+    <td class="notes"><p>CSS3. Selects all elements that have no child nodes (excluding text nodes).<p></td>
+  </tr>
+
+  <tr>
+    <td class="code"><pre class="code jq">$('div:eq(<i>n</i>)')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('div').item(<i>n</i>)</pre></td>
+    <td class="notes"><p>Extension. Selects <i>nth</i> element.<p></td>
+  </tr>
+
+  <tr>
+    <td class="code"><pre class="code jq">$('div:even')
+$('div:odd')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('div').even()
+Y.all('div').odd()</pre></td>
+    <td class="notes"><p>Extension. Selects all even or odd elements. Note that elements are 0-indexed and the 0th element is considered even.<p></td>
+  </tr>
+
+  <tr>
+    <td class="code"><pre class="code jq">$(':file')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('')</pre></td>
+    <td class="notes"><p><p></td>
+  </tr>
+
+  <tr>
+    <td class="code"><pre class="code jq">$('')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('')</pre></td>
+    <td class="notes"><p><p></td>
+  </tr>
+
+  <tr>
+    <td class="code"><pre class="code jq">$('')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('')</pre></td>
+    <td class="notes"><p><p></td>
+  </tr>
+
+  <tr>
+    <td class="code"><pre class="code jq">$('')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('')</pre></td>
+    <td class="notes"><p><p></td>
+  </tr>
+
+  <tr>
+    <td class="code"><pre class="code jq">$('')</pre></td>
+    <td class="code"><pre class="code yui">Y.all('')</pre></td>
+    <td class="notes"><p><p></td>
+  </tr>
+
+</table>
