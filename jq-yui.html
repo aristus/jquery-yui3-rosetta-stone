@@ -1,3 +1,5 @@
+<html>
+<head>
 <style>
 body {
   font-family: "helvetica neue", helvetical, arial, verdana, sans-serif;
@@ -50,6 +52,7 @@ table {
     width: 100%;
     cell-spacing: 0;
     cell-padding: 0;
+    page-break-after: always;
 }
 
 td {
@@ -80,15 +83,17 @@ table {
     border-bottom: solid 1px #555;
 }
 
-ul {
+DDul {
     width: 40em;
 }
 </style>
 
 <title>jQuery - YUI3 Rosetta Stone</title>
+</head>
 
+<body>
 <h2>jQuery - YUI3 Rosetta Stone</h2>
-
+<p>If you see a bug or want to add to this list, you can check out the <a href="http://github.com/aristus/jquery-yui-rosetta-stone">project on GitHub</a> or <a href="#comments">leave a comment</a>. Thanks!</p>
 <ul>
 <li>
   <b><a href="#common">Common Idioms</a></b>
@@ -699,7 +704,8 @@ $('#.foo').hide(600);</pre></td>
   }
 );
 a.on('end', function(ev) {
-    ev.target._node.setStyle('display', 'none');
+    ev.target._node
+      .setStyle('display', 'none');
 });
 a.run();</pre></td>
     <td class="notes"><p><code>.fadeOut()</code> fades the opacity to 0, then sets <code>display:none</code> on the element. <code>fadeIn()</code> is naturally the inverse. Note that jQuery effects tend to default to 200 or 600ms while YUI defaults to 1,000. YUI durations are in fractions of seconds; jQuery durations are set in milliseconds.</p>
@@ -719,13 +725,13 @@ a.run();</pre></td>
   <tr>
     <td class="code"><pre class="code jq">$('<i>.foo</i>').<i>list_method</i>(<i>args</i>)</pre></td>
     <td class="code"><pre class="code yui">Y.all(Y.all('<i>.foo</i>')._nodes.<i>list_method</i>(<i>args</i>))</pre></td>
-    <td class="notes"><p>Any Array operation that you can perform on a jQuery list can be translated to YUI in this form. YUI NodeList objects are not native Arrays, but the private <code>_nodes</code> property is. However, calling list operations like <code>.concat()</code> on <code>._nodes</code> results in an array of DOM elements, not a NodeList. To generate a new NodeList for the new array, you wrap it in a call to <code>Y.all()</code>.</p></td>
+    <td class="notes"><p>Any Array operation that you can perform on a jQuery list can be translated to YUI in this form. YUI NodeList objects are not native Arrays, but the private <code>_nodes</code> property is. However, calling list operations like <code>.concat()</code> on <code>._nodes</code> results in an array of DOM elements, not a NodeList. To generate a new NodeList for the new array, you have wrap it in a call to <code>Y.all()</code>. All of this wrapping and unwrapping suggests a patch to YUI.</p></td>
   </tr>
 
   <tr>
     <td class="code"><pre class="code jq">$('div').slice(<i>x</i>, <i>y</i>)</pre></td>
     <td class="code"><pre class="code yui">Y.all(Y.all('div')._nodes.slice(<i>x</i>, <i>y</i>))</pre></td>
-    <td class="notes"><p></p></td>
+    <td class="notes"><p>Return the <i>xth</i> to the <i>yth</i> div elements.</p></td>
   </tr>
 
   <tr>
@@ -733,7 +739,7 @@ a.run();</pre></td>
     <td class="code"><pre class="code yui">Y.all(
     Y.all('div')._nodes.concat(Y.all('p')._nodes)
 )</pre></td>
-    <td class="notes"><p></p></td>
+    <td class="notes"><p><code>.concat()</code> and friends are coming to a point release of YUI.</p></td>
   </tr>
 
   <tr>
@@ -766,8 +772,8 @@ for (var i=0; i&lt;foo.length; i++) {
     <td class="code"><pre class="code yui">var filtered = [];
 Y.all('<i>.foo</i>').each(
   function(node) {
-    if (node.<i>property</i> === '<i>value</i>') {
-      filtered.push(node);
+    if (node.get(<i>property</i>) === '<i>value</i>') {
+      filtered.push(node._node);
     }
   }
 );
@@ -775,11 +781,11 @@ filtered = Y.all(filtered);
 </pre></td>
     <td class="notes"><p>Given a list of elements, return only those whose <i>property</i> matches <i>value</i>.</p></td>
   </tr>
- 
+
   <tr>
     <td class="code"><pre class="code jq">$('<i>.foo</i>').map(
   function(idx, el) {
-    some_function(el);
+    some_function($(el));
   }
 );
 </pre></td>
@@ -787,7 +793,7 @@ filtered = Y.all(filtered);
 Y.all('<i>.foo</i>').each(
   function(node) {
     mapped.push(
-        some_function(node)
+        some_function(node)._node
     );
   }
 );
@@ -836,53 +842,76 @@ Y.io('<i>/ajax/test.html</i>', {
     <td class="notes"><p>Load the content of a given URL and replace the contents of <code>#message</code> with it.</p></td>
   </tr>
 
-  <tr>
-    <td class="code"><pre class="code jq">$('')</pre></td>
-    <td class="code"><pre class="code yui">Y.all('')</pre></td>
-    <td class="notes"><p></p></td>
-  </tr>
-</table>
+<!--   <tr> -->
+<!--     <td class="code"><pre class="code jq">$('')</pre></td> -->
+<!--     <td class="code"><pre class="code yui">Y.all('')</pre></td> -->
+<!--     <td class="notes"><p></p></td> -->
+<!--   </tr> -->
+<!-- </table> -->
 
 
-<table cellspacing="0">
-  <thead>
-    <th class="code"><h3 style="color:#009;">jQuery 1.4.2</h3></th>
-    <th class="code"><h3 style="color:#900;">YUI 3.0.0</h3></th>
-    <th class="notes"><a name=""><h2 class="section"></h2></a></th>
-  </thead>
+<!-- <table cellspacing="0"> -->
+<!--   <thead> -->
+<!--     <th class="code"><h3 style="color:#009;">jQuery 1.4.2</h3></th> -->
+<!--     <th class="code"><h3 style="color:#900;">YUI 3.0.0</h3></th> -->
+<!--     <th class="notes"><a name=""><h2 class="section"></h2></a></th> -->
+<!--   </thead> -->
 
-  <tr>
-    <td class="code"><pre class="code jq">$('')</pre></td>
-    <td class="code"><pre class="code yui">Y.all('')</pre></td>
-    <td class="notes"><p></p></td>
-  </tr>
+<!--   <tr> -->
+<!--     <td class="code"><pre class="code jq">$('')</pre></td> -->
+<!--     <td class="code"><pre class="code yui">Y.all('')</pre></td> -->
+<!--     <td class="notes"><p></p></td> -->
+<!--   </tr> -->
 
-  <tr>
-    <td class="code"><pre class="code jq">$('')</pre></td>
-    <td class="code"><pre class="code yui">Y.all('')</pre></td>
-    <td class="notes"><p></p></td>
-  </tr>
+<!--   <tr> -->
+<!--     <td class="code"><pre class="code jq">$('')</pre></td> -->
+<!--     <td class="code"><pre class="code yui">Y.all('')</pre></td> -->
+<!--     <td class="notes"><p></p></td> -->
+<!--   </tr> -->
 
-</table>
+<!-- </table> -->
 
 
-<table cellspacing="0">
-  <thead>
-    <th class="code"><h3 style="color:#009;">jQuery 1.4.2</h3></th>
-    <th class="code"><h3 style="color:#900;">YUI 3.0.0</h3></th>
-    <th class="notes"><a name=""><h2 class="section"></h2></a></th>
-  </thead>
+<!-- <table cellspacing="0"> -->
+<!--   <thead> -->
+<!--     <th class="code"><h3 style="color:#009;">jQuery 1.4.2</h3></th> -->
+<!--     <th class="code"><h3 style="color:#900;">YUI 3.0.0</h3></th> -->
+<!--     <th class="notes"><a name=""><h2 class="section"></h2></a></th> -->
+<!--   </thead> -->
 
-  <tr>
-    <td class="code"><pre class="code jq">$('')</pre></td>
-    <td class="code"><pre class="code yui">Y.all('')</pre></td>
-    <td class="notes"><p></p></td>
-  </tr>
+<!--   <tr> -->
+<!--     <td class="code"><pre class="code jq">$('')</pre></td> -->
+<!--     <td class="code"><pre class="code yui">Y.all('')</pre></td> -->
+<!--     <td class="notes"><p></p></td> -->
+<!--   </tr> -->
 
-  <tr>
-    <td class="code"><pre class="code jq">$('')</pre></td>
-    <td class="code"><pre class="code yui">Y.all('')</pre></td>
-    <td class="notes"><p></p></td>
-  </tr>
+<!--   <tr> -->
+<!--     <td class="code"><pre class="code jq">$('')</pre></td> -->
+<!--     <td class="code"><pre class="code yui">Y.all('')</pre></td> -->
+<!--     <td class="notes"><p></p></td> -->
+<!--   </tr> -->
 
-</table>
+<!-- </table> -->
+
+
+<!-- <a name="comments"><h3>Comments</h3></a> -->
+<!-- <div id="disqus_thread"></div><script type="text/javascript" src="http://disqus.com/forums/carlos-bueno/embed.js"></script><noscript><a href="http://disqus.com/forums/carlos-bueno/?url=ref">View the discussion thread.</a></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a> -->
+
+
+
+</body>
+<!-- <script type="text/javascript"> -->
+<!-- //<![CDATA[ -->
+<!-- (function() { -->
+<!-- 	var links = document.getElementsByTagName('a'); -->
+<!-- 	var query = '?'; -->
+<!-- 	for(var i = 0; i < links.length; i++) { -->
+<!-- 	if(links[i].href.indexOf('#disqus_thread') >= 0) { -->
+<!-- 		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&'; -->
+<!-- 	} -->
+<!-- 	} -->
+<!-- 	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/carlos-bueno/get_num_replies.js' + query + '"></' + 'script>'); -->
+<!-- })(); -->
+<!-- //]]> -->
+<!-- </script> -->
+</html>
