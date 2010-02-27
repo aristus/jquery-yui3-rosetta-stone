@@ -17,13 +17,12 @@ h1, h2, h3 {
 
 pre, pre *, code, td, p {
     line-height: 1.4em;
-    font-size: 12pt;
+    font-size: 10pt;
 }
-td * {
-}
+
 pre, pre *, code {
     font-size: 12px;
-    font-family: monaco, inconsolata, monofur, profont, monaco, courier;
+    font-family: inconsolata, monofur, profont, monaco, courier;
 }
 
 pre.jq {
@@ -51,18 +50,20 @@ table {
     cell-spacing: 0;
     cell-padding: 0;
     margin-bottom: 2em;
-    border-bottom: solid 1px #555;
+    DDborder-bottom: solid 1px #555;
 }
 
 td {
     border-top: solid 1px #ddd;
     vertical-align: top;
-    padding: 8px 12px 10px 8px;
+    padding: 8px 14px;
 }
 
-th {
+tr.head td {
     text-align: left;
     border-bottom: solid 1px #666;
+    background: none;
+    border-top:none;
 }
 
 pre.code i {
@@ -82,6 +83,14 @@ pre.code i {
     .screenonly {
         display:none;
     }
+
+    pre, pre *, code, td, p {
+        font-size: 9pt;
+    }
+    pre, pre *, code {
+        font-size: 8pt;
+    }
+
 }
 
 a, a:visited {
@@ -137,11 +146,11 @@ a, a:visited {
 
 
 <table cellspacing="0">
-  <thead>
-    <th class="code"><h3 style="color:#900;">jQuery 1.4.2</h3></th>
-    <th class="code"><h3 style="color:#009;">YUI 3.0.0</h3></th>
-    <th class="notes"><a name="started"><h2 class="section">Getting Started</h2></a></th>
-  </thead>
+  <tr class="head">
+    <td class="code"><h3 style="color:#900;">jQuery 1.4.2</h3></td>
+    <td class="code"><h3 style="color:#009;">YUI 3.0.0</h3></td>
+    <td class="notes"><a name="started"><h2 class="section">Getting Started</h2></a></td>
+  </tr>
 
   <tr>
     <td class="code">
@@ -162,11 +171,11 @@ a, a:visited {
 </table>
 
 <table cellspacing="0">
-  <thead>
-    <th class="code"><h3 style="color:#900;">jQuery 1.4.2</h3></th>
-    <th class="code"><h3 style="color:#009;">YUI 3.0.0</h3></th>
-    <th class="notes"><a name="common"><h2 class="section">Common Idioms</h2></a></th>
-  </thead>
+  <tr class="head">
+    <td class="code"><h3 style="color:#900;">jQuery 1.4.2</h3></td>
+    <td class="code"><h3 style="color:#009;">YUI 3.0.0</h3></td>
+    <td class="notes"><a name="common"><h2 class="section">Common Idioms</h2></a></td>
+  </tr>
 
   <tr>
     <td class="code">
@@ -177,7 +186,7 @@ a, a:visited {
     </td>
     <td class="notes">
       
-      <p>jQuery and YUI3 use the similar selector engine syntax, but jQuery has added extensions to the Sizzle CSS3-compliant selector engine. YUI3 comes with three different selector engines; see the section on <a href="#selectors">Selectors</a>.
+      <p>jQuery and YUI3 use similar selector syntax, but jQuery has added extensions, mainly convenience pseudo-classes, to the Sizzle CSS3-compliant selector engine. YUI3 comes with three different selector engines; see the section on <a href="#selectors">Selectors</a>.
 
       <p><code>Y.one()</code> returns single items. If no elements match the selector, it returns <code>null</code>, not the empty list <code>[]</code>.<p>
     </td>
@@ -207,10 +216,7 @@ a, a:visited {
       <pre class="code yui">.one('p.foo')
 .all('p.foo')</pre>
     </td>
-    <td class="notes">
-      
-      <p><p>
-    </td>
+    <td class="notes"><p>Finds P elements with class foo that are children of the given node.<p></td>
   </tr>
 
   <tr>
@@ -221,10 +227,7 @@ a, a:visited {
     <td class="code">
       <pre class="code yui">Y.Node.create('&lt;div/&gt;')</pre>
     </td>
-    <td class="notes">
-      
-      <p><p>
-    </td>
+    <td class="notes"><p>Create a new DOM element. Does not add it to the document tree.<p></td>
   </tr>
 
   <tr>
@@ -259,8 +262,7 @@ a, a:visited {
 .get('value')
 </pre>
     </td>
-    <td class="notes">
-    </td>
+    <td class="notes"><p>jQuery tends to overload getters and setters in the same method.</p></td>
   </tr>
 
   <tr>
@@ -291,7 +293,7 @@ a, a:visited {
 </pre>
     </td>
     <td class="notes">
-      <p><code>.on()</code> is not repeat <b>not chainable</b> by default!</p>
+      <p><code>.on()</code> is not repeat not chainable by default!</p>
     </td>
   </tr>
 
@@ -305,10 +307,7 @@ a, a:visited {
     <td class="code">
       <pre class="code yui"><i>parent</i>.append('&lt;div/&gt;')</pre>
     </td>
-    <td class="notes">
-      
-      <p><p>
-    </td>
+    <td class="notes"><p>Creates a new div element and makes it a child of <code>parent</code>.<p></td>
   </tr>
 
   <tr>
@@ -355,19 +354,18 @@ $('&lt;p&gt;foo&lt;p&gt;')
       <pre class="code jq">.addClass('<i>foo</i>')
 .removeClass('<i>foo</i>')
 .toggleClass('<i>foo</i>')
+.hasClass('<i>foo</i>')
 </pre>
     </td>
     <td class="code">
       <pre class="code yui">.addClass('<i>foo</i>')
 .removeClass('<i>foo</i>')
 .toggleClass('<i>foo</i>')
+.hasClass('<i>foo</i>')
 </pre>
     </td>
     <td class="notes">
-      
-      <p>
-
-      <p>
+      <p>CSS class name manipulation.<p>
     </td>
   </tr>
 
@@ -380,10 +378,7 @@ $('&lt;p&gt;foo&lt;p&gt;')
       <pre class="code yui">.replaceClass('<i>foo</i>', '<i>bar</i>')</pre>
     </td>
     <td class="notes">
-      
-      <p>
-
-      <p>
+      <p>Replace a node's CSS class 'foo' with 'bar'.<p>
     </td>
   </tr>
 
@@ -436,20 +431,16 @@ $('&lt;p&gt;foo&lt;p&gt;')
 
 
 <table cellspacing="0">
-  <thead>
-    <th class="code"><h3 style="color:#900;">jQuery 1.4.2</h3></th>
-    <th class="code"><h3 style="color:#009;">YUI 3.0.0</h3></th>
-    <th class="notes"><a name="selectors"><h2 class="section">Selectors</h2></a></th>
-  </thead>
+  <tr class="head">
+    <td class="code"><h3 style="color:#900;">jQuery 1.4.2</h3></td>
+    <td class="code"><h3 style="color:#009;">YUI 3.0.0</h3></td>
+    <td class="notes"><a name="selectors"><h2 class="section">Selectors</h2></a></td>
+  </tr>
 
   <tr>
     <td class="code"><pre class="code jq">$('*')</pre></td>
-    <td class="code"><pre class="code yui">YUI().use('node', 'selector-css3',
-  function(Y) {
-    Y.all('*')
-  }
-);</pre></td>
-    <td class="notes"><p>Select all nodes. Note the <code>selector-css3</code> module for YUI. For the rest of the examples in this section, please assume this module.</p></td>
+    <td class="code"><pre class="code yui">Y.all('*')</pre></td>
+    <td class="notes"><p>Select all nodes. Note that the default selector engine for YUI3 is CSS 2.1. For all examples in this section, use the <code>selector-css3</code> module for YUI.</p></td>
   </tr>
   <tr>
     <td class="code"><pre class="code jq">$(':animated')</pre></td>
@@ -530,13 +521,13 @@ Y.all('div').odd()</pre></td>
   <tr>
     <td class="code"><pre class="code jq">$(':file')</pre></td>
     <td class="code"><pre class="code yui">Y.all('input[type=file]')</pre></td>
-    <td class="notes"><p></p></td>
+    <td class="notes"><p>Extension. Find input elements whose type=file.</p></td>
   </tr>
 
   <tr>
     <td class="code"><pre class="code jq">$('div:first-child')</pre></td>
     <td class="code"><pre class="code yui">Y.all('div:first-child')</pre></td>
-    <td class="notes"><p>CSS3. Selects the first child element.</p></td>
+    <td class="notes"><p>CSS3. Selects the first child element of divs.</p></td>
   </tr>
 
   <tr>
@@ -577,7 +568,7 @@ Y.all('div').each(function(node) {
 });
 hidden = Y.all(hidden);
 </pre></td>
-    <td class="notes"><p>Extension. This is a weird one. In jQuery > 1.3.2 <code>:hidden</code> selects all elements (or descendents of elements) which <a href="http://docs.jquery.com/Release:jQuery_1.3.2#:visible.2F:hidden_Overhauled">take up no visual space</a>. Elements with <code>display:none</code> or whose <code>offsetWidth/offsetHeight</code> equal 0 are considered hidden. Elements with <code>visibility:hidden</code> are <b>not</b> considered hidden.</p>
+    <td class="notes"><p>Extension. This is a weird one. In jQuery > 1.3.2 <code>:hidden</code> selects all elements (or descendents of elements) which <a href="http://docs.jquery.com/Release:jQuery_1.3.2#:visible.2F:hidden_Overhauled">take up no visual space</a>. Elements with <code>display:none</code> or whose <code>offsetWidth/offsetHeight</code> equal 0 are considered hidden. Elements with <code>visibility:hidden</code> are not considered hidden.</p>
 
 <p>The YUI3 equivalent would essentially be a port of the jQuery code that implements <code>:hidden</code>. This might be a good candidate for a patch to YUI3.</p>
 </td>
@@ -671,11 +662,11 @@ if (lst) {
 </table>
 
 <table cellspacing="0">
-  <thead>
-    <th class="code"><h3 style="color:#900;">jQuery 1.4.2</h3></th>
-    <th class="code"><h3 style="color:#009;">YUI 3.0.0</h3></th>
-    <th class="notes"><a name="effects"><h2 class="section">Effects</h2></a></th>
-  </thead>
+  <tr class="head">
+    <td class="code"><h3 style="color:#900;">jQuery 1.4.2</h3></td>
+    <td class="code"><h3 style="color:#009;">YUI 3.0.0</h3></td>
+    <td class="notes"><a name="effects"><h2 class="section">Effects</h2></a></td>
+  </tr>
 
   <tr>
     <td class="code"><pre class="code jq">$('<i>#foo</i>').animate(
@@ -735,15 +726,15 @@ a.run();</pre></td>
 </table>
 
 <table cellspacing="0">
-  <thead>
-    <th class="code"><h3 style="color:#900;">jQuery 1.4.2</h3></th>
-    <th class="code"><h3 style="color:#009;">YUI 3.0.0</h3></th>
-    <th class="notes"><a name="nodelist"><h2 class="section">Array vs NodeList</h2></a></th>
-  </thead>
+  <tr class="head">
+    <td class="code"><h3 style="color:#900;">jQuery 1.4.2</h3></td>
+    <td class="code"><h3 style="color:#009;">YUI 3.0.0</h3></td>
+    <td class="notes"><a name="nodelist"><h2 class="section">Array vs NodeList</h2></a></td>
+  </tr>
 
   <tr>
-    <td class="code"><pre class="code jq">$('<i>.foo</i>').<i>list_method</i>(<i>args</i>)</pre></td>
-    <td class="code"><pre class="code yui">Y.all(Y.all('<i>.foo</i>')._nodes.<i>list_method</i>(<i>args</i>))</pre></td>
+    <td class="code"><pre class="code jq">$('<i>.foo</i>').<i>array_method</i>(<i>args</i>)</pre></td>
+    <td class="code"><pre class="code yui">Y.all(Y.all('<i>.foo</i>')._nodes.<i>array_method</i>(<i>args</i>))</pre></td>
     <td class="notes"><p>Any Array operation that you can perform on a jQuery list can be translated to YUI in this form. YUI NodeList objects are not native Arrays, but the private <code>_nodes</code> property is. However, calling list operations like <code>.concat()</code> on <code>._nodes</code> results in an array of DOM elements, not a NodeList. To generate a new NodeList for the new array, you have wrap it in a call to <code>Y.all()</code>. All of this wrapping and unwrapping suggests a patch to YUI.</p></td>
   </tr>
 
@@ -806,7 +797,7 @@ filtered = Y.all(filtered);
   <tr>
     <td class="code"><pre class="code jq">$('<i>.foo</i>').map(
   function(idx, el) {
-    some_function($(el));
+    some_function(el);
   }
 );
 </pre></td>
@@ -814,7 +805,7 @@ filtered = Y.all(filtered);
 Y.all('<i>.foo</i>').each(
   function(node) {
     mapped.push(
-        some_function(node)._node
+        some_function(node)
     );
   }
 );
@@ -826,11 +817,11 @@ mapped = Y.all(mapped);
 
 
 <table cellspacing="0">
-  <thead>
-    <th class="code"><h3 style="color:#900;">jQuery 1.4.2</h3></th>
-    <th class="code"><h3 style="color:#009;">YUI 3.0.0</h3></th>
-    <th class="notes"><a name="ajax"><h2 class="section">Ajax</h2></a></th>
-  </thead>
+  <tr class="head">
+    <td class="code"><h3 style="color:#900;">jQuery 1.4.2</h3></td>
+    <td class="code"><h3 style="color:#009;">YUI 3.0.0</h3></td>
+    <td class="notes"><a name="ajax"><h2 class="section">Ajax</h2></a></td>
+  </tr>
 
   <tr>
     <td class="code"><pre class="code jq">$.ajax({
@@ -878,11 +869,11 @@ Y.io('<i>/ajax/test.html</i>', {
 
 
 <table cellspacing="0">
-  <thead>
-    <th class="code"><h3 style="color:#900;">jQuery 1.4.2</h3></th>
-    <th class="code"><h3 style="color:#009;">YUI 3.0.0</h3></th>
-    <th class="notes"><a name="css"><h2 class="section">CSS</h2></a></th>
-  </thead>
+  <tr class="head">
+    <td class="code"><h3 style="color:#900;">jQuery 1.4.2</h3></td>
+    <td class="code"><h3 style="color:#009;">YUI 3.0.0</h3></td>
+    <td class="notes"><a name="css"><h2 class="section">CSS</h2></a></td>
+  </tr>
 
   <tr>
     <td class="code">
@@ -898,13 +889,13 @@ Y.io('<i>/ajax/test.html</i>', {
 .hasClass('<i>foo</i>')
 </pre>
     </td>
-    <td class="notes"><p><p></td>
+    <td class="notes"><p>CSS class name manipulation.<p></td>
   </tr>
 
   <tr>
     <td class="code"><pre class="code jq">.removeClass('<i>foo</i>').addClass('<i>bar</i>')</pre></td>
     <td class="code"><pre class="code yui">.replaceClass('<i>foo</i>', '<i>bar</i>')</pre></td>
-    <td class="notes"><p><p></td>
+    <td class="notes"><p>Replace node's CSS class 'foo' with 'bar'.<p></td>
   </tr>
 
   <tr>
@@ -967,11 +958,11 @@ Y.io('<i>/ajax/test.html</i>', {
 
 
 <!-- <table cellspacing="0"> -->
-<!--   <thead> -->
-<!--     <th class="code"><h3 style="color:#900;">jQuery 1.4.2</h3></th> -->
-<!--     <th class="code"><h3 style="color:#009;">YUI 3.0.0</h3></th> -->
-<!--     <th class="notes"><a name=""><h2 class="section"></h2></a></th> -->
-<!--   </thead> -->
+<!--   <tr class="head"> -->
+<!--     <td class="code"><h3 style="color:#900;">jQuery 1.4.2</h3></td> -->
+<!--     <td class="code"><h3 style="color:#009;">YUI 3.0.0</h3></td> -->
+<!--     <td class="notes"><a name=""><h2 class="section"></h2></a></td> -->
+<!--   </tr> -->
 
 <!--   <tr> -->
 <!--     <td class="code"><pre class="code jq">$('')</pre></td> -->
@@ -991,25 +982,40 @@ Y.io('<i>/ajax/test.html</i>', {
 <a name="contrib"><h2>How to Contribute</h2></a>
 <p>If you find a bug or want to add to this list, you can check out the <a href="http://github.com/aristus/jquery-yui-rosetta-stone">project on GitHub</a> or add a comment below. Enjoy!</p>
 
-<div class="screenonly">
-  <a name="comments"><h2>Comments</h2></a>
-  <div id="disqus_thread"></div><script type="text/javascript" src="http://disqus.com/forums/carlos-bueno/embed.js"></script><noscript><a href="http://disqus.com/forums/carlos-bueno/?url=ref">View the discussion thread.</a></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
-</div>
+<!-- <div class="screenonly"> -->
+<!--   <a name="comments"><h2>Comments</h2></a> -->
+<!--   <div id="disqus_thread"></div><script type="text/javascript" src="http://disqus.com/forums/carlos-bueno/embed.js"></script><noscript><a href="http://disqus.com/forums/carlos-bueno/?url=ref">View the discussion thread.</a></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a> -->
+<!-- </div> -->
 
 
 </body>
-<script type="text/javascript">
-//<![CDATA[
-(function() {
-	var links = document.getElementsByTagName('a');
-	var query = '?';
-	for(var i = 0; i < links.length; i++) {
-	if(links[i].href.indexOf('#disqus_thread') >= 0) {
-		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
-	}
-	}
-	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/carlos-bueno/get_num_replies.js' + query + '"></' + 'script>');
-})();
-//]]>
-</script>
+<!-- <script type="text/javascript"> -->
+<!-- //<![CDATA[ -->
+<!-- (function() { -->
+<!-- 	var links = document.getElementsByTagName('a'); -->
+<!-- 	var query = '?'; -->
+<!-- 	for(var i = 0; i < links.length; i++) { -->
+<!-- 	if(links[i].href.indexOf('#disqus_thread') >= 0) { -->
+<!-- 		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&'; -->
+<!-- 	} -->
+<!-- 	} -->
+<!-- 	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/carlos-bueno/get_num_replies.js' + query + '"></' + 'script>'); -->
+<!-- })(); -->
+<!-- //]]> -->
+<!-- </script> -->
 </html>
+
+
+<script>
+/*
+Y = YUI().use('node', function(Y) {
+    var trs = Y.all('tr')
+    trs.each(function(node, idx, lst) {
+        var tds = node.get('children').remove();
+        node.insert(tds.item(2));
+        node.insert(tds.item(0));
+        node.insert(tds.item(1));
+    });
+})
+*/
+</script>
