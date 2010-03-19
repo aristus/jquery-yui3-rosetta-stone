@@ -7,7 +7,7 @@ Gill of Gill Sans fame was a student of Edward Johnston, who almost single-hande
 resurrected the art of illumination and calligraphy.
 */
 body {
-  font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Helvetica Neue", "Helvetica", sans-serif;
 }
 
 h1, h2, h3 {
@@ -78,10 +78,16 @@ pre.code i {
 .gloss {
     display: none;
 }
+.printonly {
+    display:none;
+}
 
 @media print {
     .screenonly {
         display:none;
+    }
+    .printonly {
+        display:block;
     }
 
     pre, pre *, code, td, p {
@@ -103,8 +109,9 @@ a, a:visited {
 
 <body>
 <h2>jQuery - YUI3 Rosetta Stone</h2>
+<p class="printonly">Rev 19 March 2010  <a href="http://carlos.bueno.org/jq-yui.pdf">carlos.bueno.org/jq-yui.pdf</a></p>
 
-<ul style="page-break-after: always;">
+<ul class="screenonly"><!--style="page-break-after: always;">-->
 <li>
   <a href="#start">Getting Started</a> 
   <p class="gloss">YUI3 includes features for dynamic loading and namespacing</p>
@@ -137,7 +144,7 @@ a, a:visited {
     <p class="gloss"></p>
   </li>
 
-  <li>
+  <li class="screenonly">
     <a href="#contrib">How to Contribute</a>
   </li>
 </ul>
@@ -165,7 +172,9 @@ a, a:visited {
     </td>
     <td class="notes">
       
-      <p>The <code>jQuery</code> and <code>$</code> objects are globals and the jQuery library itself is statically loaded, so they are available immediately. YUI3 is sandboxed and by default is dynamically loaded. The <code>Y</code> object is only available inside the anonymous function sandbox, and the function only executes after all scripts are present and accounted for. This makes for a cleaner environment (eg, you can mix multiple versions of YUI in the same page) at the cost of some counterintuitive onload behavior.</p>
+      <p>The <code>jQuery</code> and <code>$</code> objects are globals and the jQuery library itself is statically loaded, so they are available immediately.</p>
+
+      <p>YUI3 is a little different. It is sandboxed and by default dynamically loaded. The <code>Y</code> object is local to the function you pass as the last argument to <code>YUI().use()</code>. Usually you will put all code that uses YUI3 inside one of these functions. This function executes <b>after</b> all the referenced modules are loaded and accounted for. This makes for a cleaner Javascript namespace at the cost of some boilerplate. The return value of <code>YUI().use()</code> is also a Y object, which you can assign to a global variable [ eg <code class="nowrap">Y = YUI().use(...);</code> ] and debug with it in a Javascript console.</p>
     </td>
   </tr>
 </table>
@@ -185,10 +194,27 @@ a, a:visited {
       <pre class="code yui">Y.one('div.foo')</pre>
     </td>
     <td class="notes">
-      
       <p>jQuery and YUI3 use similar selector syntax, but jQuery has added extensions, mainly convenience pseudo-classes, to the Sizzle CSS3-compliant selector engine. YUI3 comes with three different selector engines; see the section on <a href="#selectors">Selectors</a>.
+    </td>
+  </tr>
 
-      <p><code>Y.one()</code> returns single items. If no elements match the selector, it returns <code>null</code>, not the empty list <code>[]</code>.<p>
+
+
+  <tr>
+    <td class="code">
+      <pre class="code jq">var foo = $('div.foo:first');
+foo.<i>some_method()</i>;
+</pre>
+    </td>
+    <td class="code">
+      <pre class="code yui">var foo = Y.one('div.foo');
+if (foo) {
+    foo.<i>some_method()</i>;
+}</pre>
+    </td>
+    <td class="notes">
+      <p>Return the first element which matches the selector. <code>:first</code> is a jQuery extension.</p>
+      <p>If no elements match, <code>Y.one()</code> returns <code>null</code> and you should check for it. jQuery selector methods always return a list object with 0 or more elements.<p>
     </td>
   </tr>
 
@@ -200,7 +226,24 @@ a, a:visited {
       <pre class="code yui">Y.all('div.foo')</pre>
     </td>
     <td class="notes">
-      
+      <p>Select all div elements with a class of foo.<p>
+    </td>
+  </tr>
+
+  <tr>
+    <td class="code">
+      <pre class="code jq">var foo = $('div.foo');
+if (foo) {
+    <i>// do something</i>
+}</pre>
+    </td>
+    <td class="code">
+      <pre class="code yui">var foo = Y.all('div.foo');
+if (foo.size() > 0) {
+    <i>// do something</i>
+}</pre>
+    </td>
+    <td class="notes">
       <p>If no elements match the selector, <code>Y.all()</code> returns an empty <code>NodeList</code>, not the empty list <code>[]</code>. A <code>NodeList</code> object is <a href="http://javascript.crockford.com/style2.html">truthy</a> even if it contains no elements, unlike the empty list. so use the <code>.size()</code> property to check for emptiness.<p>
     </td>
   </tr>
@@ -216,7 +259,7 @@ a, a:visited {
       <pre class="code yui">.one('p.foo')
 .all('p.foo')</pre>
     </td>
-    <td class="notes"><p>Finds P elements with class foo that are children of the given node.<p></td>
+    <td class="notes"><p>Finds <code>P</code> elements with class <code>foo</code> that are children of the given node.<p></td>
   </tr>
 
   <tr>
@@ -553,7 +596,7 @@ Y.all(Y.all('div')._nodes.slice(0,<i>n</i>));</pre></td>
   <tr>
     <td class="code"><pre class="code jq">$(':header')</pre></td>
     <td class="code"><pre class="code yui">Y.all('h1,h2,h3,h4,h5,h6,h7')</pre></td>
-    <td class="notes"><p>Extension. Selects all heading elements</p></td>
+    <td class="notes"><p>Extension. Selects all heading elements. Rarely used.</p></td>
   </tr>
 
   <tr>
@@ -695,14 +738,14 @@ if (lst) {
 a.run();</pre></td>
     <td class="notes"><p>The basic syntax and capabilities of both animation libraries are very similar. jQuery has convenience methods for effects like <code>.fadeIn()</code>, <code>.slideUp()</code>, etc. jQuery core has two easing functions: 'linear' and 'swing', but jQuery UI comes with <a href="http://jqueryui.com/demos/effect/">many more effects</a> as plugins.</p>
 
-<p>YUI3 has several <a href="http://developer.yahoo.com/yui/3/api/Easing.html">easing algorithms</a> built-in, and offers some complex tools such as <a href="http://developer.yahoo.com/yui/3/examples/anim/curve.html">animations over Besizer curves</a>. Make sure to load the <code>'anim'</code> module inside <code>YUI().use()</code>.</p>
+<p>YUI3 has several <a href="http://developer.yahoo.com/yui/3/api/Easing.html">easing algorithms</a> built-in, and offers powerful tools such as <a href="http://developer.yahoo.com/yui/3/examples/anim/curve.html">animations over Besizer curves</a>. Make sure to load the <code>'anim'</code> module in your call to <code>YUI().use()</code>.</p>
     </td>
   </tr>
 
   <tr>
     <td class="code"><pre class="code jq">$('#.foo').fadeOut();
 
-// or
+<i>// or</i>
 
 $('#.foo').hide(600);</pre></td>
     <td class="code"><pre class="code yui">var a = new Y.Anim(
@@ -718,7 +761,7 @@ a.on('end', function(ev) {
       .setStyle('display', 'none');
 });
 a.run();</pre></td>
-    <td class="notes"><p><code>.fadeOut()</code> fades the opacity to 0, then sets <code>display:none</code> on the element. <code>fadeIn()</code> is naturally the inverse. Note that jQuery effects tend to default to 200 or 600ms while YUI defaults to 1,000. YUI durations are in fractions of seconds; jQuery durations are set in milliseconds.</p>
+    <td class="notes"><p><code>.fadeOut()</code> fades the opacity to 0, then sets <code>display:none</code> on the element. <code>fadeIn()</code> is naturally the inverse. Note that jQuery effects tend to default to 200 or 600ms while YUI defaults to 1,000ms. YUI durations are in fractions of seconds; jQuery durations are set in milliseconds.</p>
 <p>Annoyingly, YUI Anim objects have events you can attach functions to, but you have to poke the private <code>_node</code> property to retrieve the element being animated.</p>
 </td>
   </tr>
@@ -948,9 +991,9 @@ Y.io('<i>/ajax/test.html</i>', {
 
   <tr>
     <td class="code"><pre class="code jq">.position()
-// {left: 123, top: 456}</pre></td>
+<i>// {left: 123, top: 456}</i></pre></td>
     <td class="code"><pre class="code yui">.getXY()
-// [123, 456]</pre></td>
+<i>// [123, 456]</i></pre></td>
     <td class="notes"><p>Get the computed x,y coordinates. The coordinates are relative to the nearest ancestor element that is relatively or absolutely positioned.</p></td>
   </tr>
 
@@ -979,43 +1022,33 @@ Y.io('<i>/ajax/test.html</i>', {
 <!-- </table> -->
 
 
+<p class="printonly"><hr/>
+Rev 19 March 2010  <a href="http://carlos.bueno.org/jq-yui.pdf">carlos.bueno.org/jq-yui.pdf</a></p>
+
+<div class="screenonly">
 <a name="contrib"><h2>How to Contribute</h2></a>
 <p>If you find a bug or want to add to this list, you can check out the <a href="http://github.com/aristus/jquery-yui-rosetta-stone">project on GitHub</a> or add a comment below. Enjoy!</p>
+</div>
 
-<!-- <div class="screenonly"> -->
-<!--   <a name="comments"><h2>Comments</h2></a> -->
-<!--   <div id="disqus_thread"></div><script type="text/javascript" src="http://disqus.com/forums/carlos-bueno/embed.js"></script><noscript><a href="http://disqus.com/forums/carlos-bueno/?url=ref">View the discussion thread.</a></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a> -->
-<!-- </div> -->
+<div class="screenonly">
+  <a name="comments"><h2>Comments</h2></a>
+  <div id="disqus_thread"></div><script type="text/javascript" src="http://disqus.com/forums/carlos-bueno/embed.js"></script><noscript><a href="http://disqus.com/forums/carlos-bueno/?url=ref">View the discussion thread.</a></noscript><a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
 
 
 </body>
-<!-- <script type="text/javascript"> -->
-<!-- //<![CDATA[ -->
-<!-- (function() { -->
-<!-- 	var links = document.getElementsByTagName('a'); -->
-<!-- 	var query = '?'; -->
-<!-- 	for(var i = 0; i < links.length; i++) { -->
-<!-- 	if(links[i].href.indexOf('#disqus_thread') >= 0) { -->
-<!-- 		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&'; -->
-<!-- 	} -->
-<!-- 	} -->
-<!-- 	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/carlos-bueno/get_num_replies.js' + query + '"></' + 'script>'); -->
-<!-- })(); -->
-<!-- //]]> -->
-<!-- </script> -->
-</html>
-
-
-<script>
-/*
-Y = YUI().use('node', function(Y) {
-    var trs = Y.all('tr')
-    trs.each(function(node, idx, lst) {
-        var tds = node.get('children').remove();
-        node.insert(tds.item(2));
-        node.insert(tds.item(0));
-        node.insert(tds.item(1));
-    });
-})
-*/
+<script type="text/javascript">
+//<![CDATA[
+(function() {
+	var links = document.getElementsByTagName('a');
+	var query = '?';
+	for(var i = 0; i < links.length; i++) {
+	if(links[i].href.indexOf('#disqus_thread') >= 0) {
+		query += 'url' + i + '=' + encodeURIComponent(links[i].href) + '&';
+	}
+	}
+	document.write('<script charset="utf-8" type="text/javascript" src="http://disqus.com/forums/carlos-bueno/get_num_replies.js' + query + '"></' + 'script>');
+})();
+//]]>
 </script>
+</html>
