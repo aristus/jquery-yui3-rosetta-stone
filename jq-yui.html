@@ -8,6 +8,7 @@ resurrected the art of illumination and calligraphy.
 */
 body {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Helvetica Neue", "Helvetica", sans-serif;
+  margin: 20px;
 }
 
 h1, h2, h3 {
@@ -50,7 +51,6 @@ table {
     cell-spacing: 0;
     cell-padding: 0;
     margin-bottom: 2em;
-    DDborder-bottom: solid 1px #555;
 }
 
 td {
@@ -82,6 +82,10 @@ pre.code i {
     display:none;
 }
 
+ul * {
+    font-size: 12pt;
+}
+
 @media print {
     .screenonly {
         display:none;
@@ -96,7 +100,9 @@ pre.code i {
     pre, pre *, code {
         font-size: 8pt;
     }
-
+    body {
+        margin: 0;
+    }
 }
 
 a, a:visited {
@@ -107,11 +113,18 @@ a, a:visited {
 <title>jQuery - YUI3 Rosetta Stone</title>
 </head>
 
-<body>
-<h2>jQuery - YUI3 Rosetta Stone</h2>
-<p class="printonly">Rev 19 March 2010  <a href="http://carlos.bueno.org/jq-yui.pdf">carlos.bueno.org/jq-yui.pdf</a></p>
+<!--  -->
 
-<ul class="screenonly"><!--style="page-break-after: always;">-->
+
+<body>
+
+
+
+<h2>jQuery - YUI3 Rosetta Stone</h2>
+<p class="printonly"><i>19 March 2010</i>  <a href="http://carlos.bueno.org/jq-yui.html">carlos.bueno.org/jq-yui.html</a></p>
+
+
+<ul><!--style="page-break-after: always;">-->
 <li>
   <a href="#start">Getting Started</a> 
   <p class="gloss">YUI3 includes features for dynamic loading and namespacing</p>
@@ -151,8 +164,7 @@ a, a:visited {
 
 
 
-
-<table cellspacing="0">
+<table cellspacing="0" style="clear:both">
   <tr class="head">
     <td class="code"><h3 style="color:#900;">jQuery 1.4.2</h3></td>
     <td class="code"><h3 style="color:#009;">YUI 3.0.0</h3></td>
@@ -1027,7 +1039,7 @@ Rev 19 March 2010  <a href="http://carlos.bueno.org/jq-yui.pdf">carlos.bueno.org
 
 <div class="screenonly">
 <a name="contrib"><h2>How to Contribute</h2></a>
-<p>If you find a bug or want to add to this list, you can check out the <a href="http://github.com/aristus/jquery-yui-rosetta-stone">project on GitHub</a> or add a comment below. Enjoy!</p>
+<p>If you find a bug or want to add to this list, you can check out the <a href="http://github.com/aristus/jquery-yui3-rosetta-stone">project on GitHub</a> or add a comment below. Enjoy!</p>
 </div>
 
 <div class="screenonly">
