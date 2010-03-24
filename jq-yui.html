@@ -121,7 +121,7 @@ a, a:visited {
 
 
 <h2>jQuery - YUI3 Rosetta Stone</h2>
-<p class="printonly"><i>19 March 2010</i>  <a href="http://carlos.bueno.org/jq-yui.html">carlos.bueno.org/jq-yui.html</a></p>
+<p class="printonly"><i>23 March 2010</i>  <a href="http://carlos.bueno.org/jq-yui.html">carlos.bueno.org/jq-yui.html</a></p>
 
 
 <ul><!--style="page-break-after: always;">-->
@@ -256,7 +256,7 @@ if (foo.size() > 0) {
 }</pre>
     </td>
     <td class="notes">
-      <p>If no elements match the selector, <code>Y.all()</code> returns an empty <code>NodeList</code>, not the empty list <code>[]</code>. A <code>NodeList</code> object is <a href="http://javascript.crockford.com/style2.html">truthy</a> even if it contains no elements, unlike the empty list. so use the <code>.size()</code> property to check for emptiness.<p>
+      <p>If no elements match the selector, <code>Y.all()</code> returns an empty <code>NodeList</code> object. jQuery will return an empty list <code>[]</code> that is loaded with special jQ methods. Both are <a href="http://javascript.crockford.com/style2.html">truthy</a> even if they contain no elements, so use <code>NodeList.size()</code> and <code>[].length</code> to check for emptiness.<p>
     </td>
   </tr>
 
@@ -336,6 +336,10 @@ if (foo.size() > 0) {
 .blur(<i>fn</i>)
 .mouseout(<i>fn</i>)
 .mouseover(<i>fn</i>)
+
+<i>// jQuery 1.4.2 and later allows you to
+// register events when creating the element
+</i>$('&lt;p/&gt;',{text:<i>'foo'</i>, click:<i>fn</i>})
 </pre>
 
     </td>
@@ -554,15 +558,15 @@ Y.all(':enabled')</pre></td>
   </tr>
 
   <tr>
-    <td class="code"><pre class="code jq">$(':parent)</pre></td>
+    <td class="code"><pre class="code jq">$(':parent')</pre></td>
     <td class="code"><pre class="code yui"></pre></td>
-    <td class="notes"><p>Extension. Inverse of <code>:empty</code>.</p></td>
+    <td class="notes"><p>Extension. Inverse of <code>:empty</code>. Will find all elements that are a parent of at least one element.</p></td>
   </tr>
 
   <tr>
     <td class="code"><pre class="code jq">$('div:eq(<i>n</i>)')</pre></td>
     <td class="code"><pre class="code yui">Y.all('div').item(<i>n</i>)</pre></td>
-    <td class="notes"><p>Extension. Selects <i>nth</i> element. YUI's <code>item()</code> will return <code>null</code> if there is no <code>nth</code> element. jQuery's selector will return the empty list <code>[]</code> on a match failure.</p></td>
+    <td class="notes"><p>Extension. Selects <i>nth</i> element. YUI's <code>item()</code> will return <code>null</code> if there is no <code>nth</code> element. jQuery's selector will return an empty list <code>[]</code> on a match failure.</p></td>
   </tr>
 
   <tr>
@@ -810,17 +814,18 @@ a.run();</pre></td>
   </tr>
 
   <tr>
-    <td class="code"><pre class="code jq">var foo = $('<i>.foo</i>');
-for (var i=0; i&lt;foo.length; i++) {
-    // per-element code here.
-}
+    <td class="code"><pre class="code jq">$('<i>.foo</i>').each(
+  function() {
+    this.<i>some_method();</i>
+  }
+);
 </pre></td>
     <td class="code"><pre class="code yui">Y.all('<i>.foo</i>').each(
   function(node, idx, lst) {
-    // per-node code here.
+    node.<i>some_method();</i>
   }
 );</pre></td>
-    <td class="notes"><p>YUI's <code>.each()</code> is like the <code>for</code> loop. It returns the original NodeList to help with chaining.</p></td>
+    <td class="notes"><p><code>.each()</code> is like the <code>for</code> loop. YUI's each() returns the original NodeList to help with chaining.</p></td>
   </tr>
 
   <tr>
@@ -1035,7 +1040,7 @@ Y.io('<i>/ajax/test.html</i>', {
 
 
 <p class="printonly"><hr/>
-Rev 19 March 2010  <a href="http://carlos.bueno.org/jq-yui.pdf">carlos.bueno.org/jq-yui.pdf</a></p>
+Rev 23 March 2010  <a href="http://carlos.bueno.org/jq-yui.pdf">carlos.bueno.org/jq-yui.pdf</a></p>
 
 <div class="screenonly">
 <a name="contrib"><h2>How to Contribute</h2></a>
