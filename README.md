@@ -7,7 +7,7 @@ You can read and comment on the [HTML version][html], [download the PDF][pdf], o
 This is a reference, not an evaluation or comparison of the libraries. If you have an opinion 
 about which one is "better", that's great, but I don't want to hear it.
 
-Enjoy!
+BSD License: Share and enjoy, but give credit.
 
 [jquery]:http://jquery.com
 [yui3]:http://developer.yahoo.com/yui3
